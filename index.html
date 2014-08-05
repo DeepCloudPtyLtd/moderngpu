@@ -1,189 +1,80 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head>
-  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type" />
-  <title>Modern GPU</title>
-  <link href="mgpu.css" rel="stylesheet" type="text/css" />
-  <script src="syntaxhighlighter_3.0.83/scripts/shCore.js" type="text/javascript"></script>
-  <script src="syntaxhighlighter_3.0.83/scripts/shBrushCpp.js" type="text/javascript"></script>
-  <link href="syntaxhighlighter_3.0.83/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
-  <link href="syntaxhighlighter_3.0.83/styles/shCore.css" rel="stylesheet" type="text/css" />
-  <script type="text/javascript"> SyntaxHighlighter.all() </script>
-<script type="text/javascript">
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Moderngpu by DeepCloudPtyLtd</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-25772750-1']);
-  _gaq.push(['_trackPageview']);
+  </head>
+  <body>
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+      <header>
+        <h1>Moderngpu</h1>
+        <p>Design patterns for GPU computing</p>
+      </header>
 
-</script>
-</head><body class="tutorial">
+      <div id="banner">
+        <span id="logo"></span>
 
-<a href="https://github.com/NVlabs/moderngpu"><img style="position: absolute; top: 0; right: 0; border: 0;" width="149" height="149" src="forkme_right_green_007200.png" alt="Fork me on GitHub" /></a>
+        <a href="https://github.com/DeepCloudPtyLtd/moderngpu" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/DeepCloudPtyLtd/moderngpu/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/DeepCloudPtyLtd/moderngpu/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
 
-<div class="copyright">
-<p><strong>&copy; 2013, NVIDIA CORPORATION. All rights reserved.</strong></p>
-<p>Code and text by <a href="https://twitter.com/moderngpu">Sean Baxter</a>, NVIDIA Research.</p>
-<p>(Click <a href="faq.html#license">here</a> for license. Click <a href="faq.html#contact">here</a> for contact information.)</p>
-</div><br />
-<h1>Modern GPU</h1>
-<p><em><strong>Modern GPU is code and commentary intended to promote new and productive ways
-of thinking about GPU computing.</strong></em></p>
-<p>This project is a<strong> library</strong>, an <strong>algorithms book</strong>, a <strong>tutorial</strong>, and a <strong>best-practices guide</strong>. If you are new to CUDA, start <a href="faq.html#gettingstarted">here</a>. If you're already familiar with CUDA, are ready for a challenge, and want to learn design patterns for parallel programming, enjoy this series.</p>
-<p><a href="http://www.github.com/seanbaxter/gtc_2014">GTC 2014 slides and companion source code</a>.</p>
-<p><a href="cascon.pptx">Turning the Crank on Streaming Algorithms</a> presentation for <a href="https://www-927.ibm.com/ibm/cas/cascon/">IBM CASCON 2013</a>.</p>
-<p><a href="breaking.html">Notes on breaking changes</a>.</p>
-<br />
-<ol class="contents" start='0'>
-  <li><h3><a href="faq.html">FAQ</a></h3></li>
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
+        <p><img src="http://deepcloud.co/web1/wp-content/uploads/2013/09/cropped-deepcloud-banner3.jpg" alt="">Welcome to GitHub Pages.
+This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
 
-<li><h3><a href="intro.html">Introduction</a></h3><ul>
-	<li><a href="intro.html#libraries">Libraries</a></li>
-    <li><a href="intro.html#goals">Goals</a></li>
-    <li><a href="intro.html#twophase">Two-phase decomposition</a></li>
-    <li><a href="intro.html#loadbalancing">From scan to load-balancing search</a></li>
-    <li><a href="intro.html#expand">Expand</a></li>
-    <li><a href="intro.html#expandloadbalance">Expand with load-balancing search</a></li>
-    <li><a href="intro.html#algorithms">Algorithms</a></li>
-</ul>
-</li>
+<pre><code>$ cd your_repo_root/repo_name
+$ git fetch origin
+$ git checkout gh-pages
+</code></pre>
 
+<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
 
-<li><h3><a href="performance.html">Performance</a></h3><ul>
-    <li><a href="performance.html#occupancy">Occupancy and latency</a></li>
-    <li><a href="performance.html#launchbounds">Launch bounds</a></li>
-    <li><a href="performance.html#performance">Getting more performance out of MGPU</a></li>
-    <li><a href="performance.html#launchbox">LaunchBox</a></li>
-</ul>
-</li>
+<h3>
+<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
 
+<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
 
-<li>
-  <h3><a href="library.html">The Library</a></h3><ul>
-    <li><a href="library.html#framework">Framework</a></li>
-    <li><a href="library.html#loadstore">Load/store functions</a></li>
-</ul>
-</li>
+<h3>
+<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
 
+<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
 
-<li>
-  <h3><a href="scan.html">Reduce and Scan</a></h3><ul>
-	<li><a href="scan.html#benchmark">Benchmark and usage</a></li>
-	<li><a href="scan.html#host">Host functions</a></li>    
-    <li><a href="scan.html#algorithm">Algorithm</a></li>
-    <li><a href="scan.html#ctareduce">CTAReduce</a></li>
-    <li><a href="scan.html#reducekernel">Reduce kernel</a></li>
-    <li><a href="scan.html#ctascan">CTAScan</a></li>
-    <li><a href="scan.html#scankernel">Scan kernel</a></li>    
-</ul></li>
+<h3>
+<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
 
-<li>
-  <h3><a href="bulkinsert.html">Bulk Remove and Bulk Insert</a></h3><ul>
-	<li><a href="bulkinsert.html#benchmark">Benchmark and usage</a></li>
-	<li><a href="bulkinsert.html#host">Host functions</a></li>
-    <li><a href="bulkinsert.html#bulkremove">Bulk remove algorithm</a></li>
-    <li><a href="bulkinsert.html#binarysearch">BinarySearchPartitions</a></li>
-    <li><a href="bulkinsert.html#kernelbulkremove">KernelBulkRemove</a></li>
-    <li><a href="bulkinsert.html#bulkinsertpartitioning">Bulk insert partitioning</a></li>
-    <li><a href="bulkinsert.html#mergepath">Merge Path</a></li>
-	<li><a href="bulkinsert.html#bulkinsert">Bulk insert algorithm</a></li>
-    <li><a href="bulkinsert.html#kernelbulkinsert">Bulk insert host function and kernel</a></li>
-</ul></li>
+<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
 
-<li><h3><a href="merge.html">Merge</a></h3><ul>
-	<li><a href="merge.html#benchmark">Benchmark and usage</a></li>
-	<li><a href="merge.html#host">Host functions</a></li>
-    <li><a href="merge.html#algorithm">Algorithm</a></li>
-</ul></li>
+<h3>
+<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
 
-<li><h3><a href="mergesort.html">Mergesort</a></h3><ul>
-	<li><a href="mergesort.html#benchmark">Benchmark and usage</a></li>
-	<li><a href="mergesort.html#host">Host functions</a></li>
-	<li><a href="mergesort.html#algorithm">Algorithm</a></li>
-    <li><a href="mergesort.html#sortnetworks">Sorting networks</a></li>
-    <li><a href="mergesort.html#blocksort">Blocksort</a></li>
-    <li><a href="mergesort.html#mergepartitioning">Flexible merge partitioning</a></li>    
-    <li><a href="mergesort.html#mergepathpartitions">MergePathPartitions</a></li>
-    <li><a href="mergesort.html#launch">Launching from the host</a></li>
-</ul></li>
-
-<li>
-  <h3><a href="segsort.html">Segmented Sort and Locality Sort</a></h3><ul>
-	<li><a href="segsort.html#benchmark">Benchmark and usage</a></li>
-	<li><a href="segsort.html#host">Host functions</a></li>
-	<li><a href="segsort.html#algorithm">Algorithm</a></li>
-	<li><a href="segsort.html#blocksort">Segmented blocksort</a></li>
-	<li></li>
-    <li><a href="segsort.html#earlyexit">Early-exit</a></li>
-	<li><a href="segsort.html#filling">Filling the work queue</a></li>
-	<li><a href="segsort.html#servicing">Servicing the work queue</a></li>
-</ul></li>
-
-<li>
-  <h3><a href="sortedsearch.html">Vectorized Sorted Search</a></h3><ul>
-	<li><a href="sortedsearch.html#benchmark">Benchmark and usage</a></li>
-	<li><a href="sortedsearch.html#host">Host functions</a></li>
-	<li><a href="sortedsearch.html#algorithm">Algorithm</a></li>
-	<li><a href="sortedsearch.html#parallel">Parallel sorted search</a></li>
-	<li><a href="sortedsearch.html#ctasortedsearch">CTASortedSearch</a></li>
-	<li><a href="sortedsearch.html#equalitycount">SortedEqualityCount</a></li>
-</ul></li>
-<li>
-  <h3><a href="loadbalance.html">Load-Balancing Search</a></h3><ul>
-	<li><a href="loadbalance.html#benchmark">Benchmark and usage</a></li>
-	<li><a href="loadbalance.html#host">Host function</a></li>
-    <li><a href="loadbalance.html#algorithm">Algorithm</a></li>
-    <li><a href="loadbalance.html#ctaloadbalance">CTALoadBalance</a></li>
-</ul></li>
-
-<li>
-  <h3><a href="intervalmove.html">IntervalExpand and IntervalMove</a></h3><ul>
-	<li><a href="intervalmove.html#benchmark">Benchmark and usage</a></li>
-	<li><a href="intervalmove.html#host">Host functions</a></li>
-    <li><a href="intervalmove.html#intervalexpand">IntervalExpand</a></li>
-    <li><a href="intervalmove.html#intervalmove">IntervalMove</a></li>
-  </ul>
-</li>
-
-<li>
-  <h3><a href="join.html">Relational Joins</a></h3><ul>
-	<li><a href="join.html#benchmark">Benchmark and usage</a></li>
-	<li><a href="join.html#host">Host functions</a></li>
-    <li><a href="join.html#algorithm">Algorithm</a></li>
-</ul></li>
-
-<li><h3><a href="sets.html">Multisets</a></h3><ul>
-	<li><a href="sets.html#benchmark">Benchmark and usage</a></li>
-	<li><a href="sets.html#host">Host functions</a></li>
-	<li><a href="sets.html#operations">The four multiset operations</a></li>
-    <li><a href="sets.html#balancedpath">Balanced Path</a></li>
-    <li><a href="sets.html#serialops">Serial multiset operations</a></li>
-    <li><a href="sets.html#kernel">Multisets kernel</a></li>
-</ul></li>
-
-
-	<li>
-	  <h3><a href="segreduce.html">Segmented Reduction</a></h3><ul>
-    	<li><a href="segreduce.html#segreducecsr">Benchmarks and usage: Segmented reduction (CSR)</a></li>
-        <li><a href="segreduce.html#reducebykey">Benchmarks and usage: Reduce-by-key</a></li>
-        <li><a href="segreduce.html#spmv">Benchmarks and usage: Sparse matrix * vector (CSR)</a></li>
-        <li><a href="segreduce.html#usernotes">User notes</a></li>
-        <li><a href="segreduce.html#algorithm">Intra-tile algorithm</a></li>
-        <li><a href="segreduce.html#carryout">Carry-out and carry-in</a></li>
-        <li><a href="segreduce.html#ctasegreduce">CTASegReduce</a></li>
-        <li><a href="segreduce.html#reducebykeyfrontend">Reduce-by-key front-end</a></li>
-        <li><a href="segreduce.html#preprocessapply">Preprocessed segmented reduction - Apply</a></li>
-        <li><a href="segreduce.html#csrtocoo">CSR to COO</a></li>
-        <li><a href="segreduce.html#preprocessconstruct">Preprocessed segmented reduction - Construct</a></li>
-        <li><a href="segreduce.html#segreducecsrfrontend">Segmented reduction (CSR) front-end</a></li>
-      </ul>
-  </li>
-
-</ol>
-<br />
-</body>
+<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+      </section>
+      <footer>
+        <p>Project maintained by <a href="https://github.com/DeepCloudPtyLtd">DeepCloudPtyLtd</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
 </html>
